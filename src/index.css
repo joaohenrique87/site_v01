@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 213 28% 15%;
+    --primary: 240 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --border: 240 20% 88%;
+    --radius: 0.5rem;
+    --gradient-primary: linear-gradient(135deg, hsl(240 60% 45%), hsl(240 60% 55%));
+    --gradient-accent: linear-gradient(135deg, hsl(270 70% 50%), hsl(260 70% 60%));
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Sora', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea {
+    font-family: 'Sora', sans-serif !important;
+  }
+
+  /* --- Correções de UI solicitadas --- */
+
+  /* Garante que o conteúdo do Dropdown tenha fundo sólido e não transparente */
+  [data-radix-popper-content-wrapper] {
+    z-index: 100 !important;
+  }
+  
+  .bg-popover {
+    background-color: transparent !important; /* Força fundo branco sólido */
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Realce das Tabs (Dashboards e Pesquisas) */
+  /* Aplicamos ao seletor de estado do Radix UI */
+  [data-state="active"].TabsTrigger, 
+  button[data-state="active"] {
+    background-color: rgba(0, 0, 0, 0.05) !important; /* Escurece o fundo levemente */
+    color: hsl(var(--primary)) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid hsl(var(--primary)) !important;
+  }
+}

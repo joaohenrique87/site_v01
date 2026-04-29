@@ -1,0 +1,19 @@
+# Pasta para PDFs
+# Coloque seus arquivos PDF aqui
+
+## Instruções:
+1. Adicione seus PDFs nesta pasta
+2. Atualize o array `pdfData` em src/components/PDFList.tsx
+3. Use nomes de arquivo sem espaços (use hífens ou underscores)
+
+Exemplo de organização:
+```
+public/pdfs/
+  ├── lab/
+  │   ├── relatorio-lab-2020.pdf
+  │   └── relatorio-lab-2021.pdf
+  ├── lpg/
+  │   └── relatorio-lpg-2023.pdf
+  └── pesquisas/
+      └── pesquisa-cultura-2024.pdf
+```
