@@ -34,8 +34,9 @@ const Contato = () => {
     <div className="min-h-screen flex flex-col bg-background font-sans">
       <Header />
       <main className="flex-1">
-        <section className="bg-gradient-primary py-16 text-center text-white">
-          <div className="container px-4">
+        <section className="bg-gradient-primary py-16 text-center text-white"
+        style={{ height: '300px' }}>
+          <div className="container px-4 py-20">
             <h1 className="text-3xl md:text-5xl font-bold mb-4">Fale Conosco</h1>
             <p className="opacity-90">Dúvidas ou sugestões? Nossa equipe está pronta para ajudar.</p>
           </div>
