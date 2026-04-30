@@ -14,7 +14,7 @@ import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Contato from "@/pages/Contato";
 import Whatsapp from "@/components/Whatsapp";
-import VLibras from "@/components/VLibrasWidget"; // Importação direta sem chaves se for export default
+import VLibras from "@/components/VLibrasWidget";
 import VLibrasWidget from "@/components/VLibrasWidget";
 
 const queryClient = new QueryClient();
@@ -40,7 +40,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         
-        <VLibrasWidget />
+        <VLibras />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
