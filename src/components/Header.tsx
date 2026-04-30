@@ -32,41 +32,88 @@ const Header = () => {
           <NavigationMenu>
             <NavigationMenuList>
 
+              {/* SOBRE (dropdown) */}
               <NavigationMenuItem>
-                <Link to="/equipe" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-black/5 font-bold" >
-                  <div className="text-sm font-medium leading-none text-gray-900">Equipe</div>
-                  
-                </Link>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-black/5 text-gray-900">
+                  Sobre
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[300px] gap-2 p-3 bg-white/80 backdrop-blur-md rounded-xl shadow-md">
+                    
+                    <li>
+                      <Link
+                        to="/quem-somos"
+                        className="block rounded-md p-3 transition-colors hover:bg-black/5"
+                      >
+                        <div className="text-sm font-medium text-gray-900">
+                          Quem Somos
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          Conheça nossa história e missão
+                        </p>
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        to="/equipe"
+                        className="block rounded-md p-3 transition-colors hover:bg-black/5"
+                      >
+                        <div className="text-sm font-medium text-gray-900">
+                          Equipe
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          Conheça nossos profissionais
+                        </p>
+                      </Link>
+                    </li>
+
+                  </ul>
+                </NavigationMenuContent>
               </NavigationMenuItem>
 
+              {/* LINKS DIRETOS */}
               <NavigationMenuItem>
-                <Link to="/cultura-em-numeros" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-black/5 text-gray-900">
+                <Link
+                  to="/cultura-em-numeros"
+                  className="inline-flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-black/5"
+                >
                   Cultura em Números
                 </Link>
               </NavigationMenuItem>
 
-              {/* Itens comentados para uso futuro:
               <NavigationMenuItem>
-                <Link to="/Relatorios" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-black/5 text-gray-900">
+                <Link
+                  to="/relatorios"
+                  className="inline-flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-black/5"
+                >
                   Relatórios
                 </Link>
               </NavigationMenuItem>
+
               <NavigationMenuItem>
-                <Link to="/Pesquisas" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-black/5 text-gray-900">
+                <Link
+                  to="/pesquisas"
+                  className="inline-flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-black/5"
+                >
                   Pesquisas e Estudos
                 </Link>
               </NavigationMenuItem>
-              */}
 
             </NavigationMenuList>
           </NavigationMenu>
 
-          <Button variant="default" className="ml-4 bg-[#2E2EB8] hover:bg-[#1e1e8a] text-white rounded-lg transition-colors" asChild>
-            <Link to="/Contato">Contato</Link>
+          {/* BOTÃO CONTATO */}
+          <Button
+            variant="default"
+            className="ml-4 bg-[#2E2EB8] hover:bg-[#1e1e8a] text-white rounded-lg transition-colors"
+            asChild
+          >
+            <Link to="/contato">Contato</Link>
           </Button>
         </nav>
 
-        {/* Botão hambúrguer (Mobile) */}
+        {/* Mobile Button */}
         <Button
           variant="ghost"
           size="icon"
@@ -81,27 +128,35 @@ const Header = () => {
       {isOpen && (
         <div className="absolute top-[98.03px] left-0 w-full lg:hidden border-t border-white/20 bg-[#FFFFFF]/70 backdrop-blur-xl px-4 py-4 rounded-b-[30px] shadow-lg">
           <nav className="flex flex-col space-y-1">
-            {[
-              { to: "/quem-somos", label: "Quem Somos" },
-              { to: "/equipe", label: "Equipe" },
-              { to: "/cultura-em-numeros", label: "Cultura em Números" },
-              { to: "/relatorios", label: "Relatórios" },
-              { to: "/pesquisas", label: "Pesquisas e Estudos" },
-            ].map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                onClick={() => setIsOpen(false)}
-                className="block rounded-md px-3 py-3 text-sm font-medium text-gray-900 hover:bg-black/5 transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
+
+            <Link to="/quem-somos" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Quem Somos
+            </Link>
+
+            <Link to="/equipe" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Equipe
+            </Link>
+
+            <Link to="/cultura-em-numeros" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Cultura em Números
+            </Link>
+
+            <Link to="/relatorios" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Relatórios
+            </Link>
+
+            <Link to="/pesquisas" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Pesquisas e Estudos
+            </Link>
+
             <div className="pt-2">
               <Button asChild className="w-full bg-[#2E2EB8] hover:bg-[#1e1e8a] text-white">
-                <Link to="/contato" onClick={() => setIsOpen(false)}>Contato</Link>
+                <Link to="/contato" onClick={() => setIsOpen(false)}>
+                  Contato
+                </Link>
               </Button>
             </div>
+
           </nav>
         </div>
       )}

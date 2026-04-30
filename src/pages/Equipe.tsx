@@ -99,7 +99,7 @@ const Equipe = () => {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="py-20 bg-[#2E2EB8] relative overflow-hidden min-h-[520px] flex flex-col justify-end items-center pb-[60px]">
+        <section className="py-0 bg-[#2E2EB8] relative overflow-hidden min-h-[520px] flex flex-col justify-end items-center pb-[60px]">
           <div className="absolute inset-0 z-10 opacity-40 pointer-events-none flex items-center justify-center">
             <img
               src={meuLogo}
@@ -109,7 +109,7 @@ const Equipe = () => {
           </div>
 
           <div className="container relative z-30 text-center">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-10">
               Nossa Equipe
             </h2>
             <p className="text-white/90 text-lg md:text-xl max-w-3xl mx-auto font-medium">
