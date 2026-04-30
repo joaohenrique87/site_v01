@@ -26,11 +26,11 @@ const Footer = () => {
             <h3 className="font-semibold text-foreground mb-4">Links Rápidos</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/quem-somos" className="text-muted-foreground hover:text-primary transition-colors">
+              {/*  <Link to="/quem-somos" className="text-muted-foreground hover:text-primary transition-colors">
                   Quem Somos
                 </Link>
               </li>
-              <li>
+              <li>*/}
                 <Link to="/equipe" className="text-muted-foreground hover:text-primary transition-colors">
                   Equipe
                 </Link>
@@ -40,16 +40,16 @@ const Footer = () => {
                   Cultura em Números
                 </Link>
               </li>
-              <li>
+             {/* <li>
                 <Link to="/relatorios" className="text-muted-foreground hover:text-primary transition-colors">
                   Relatórios
                 </Link>
-              </li>
-              <li>
+              </li> */}
+            {/*  <li>
                 <Link to="/pesquisas" className="text-muted-foreground hover:text-primary transition-colors">
                   Pesquisas
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
