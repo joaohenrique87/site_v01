@@ -26,7 +26,7 @@ const Index = () => {
         <QuemSomosSection />
 
         {/* Painéis de Dados */}
-        <section className="py-20 bg-tran max-h-[800px]">
+        <section className="py-10 bg-tran max-h-[800px]">
           <div className="max-w-[1600px] mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-[#2E2EB8]" style={{ fontSize: "2rem", fontWeight: 700, marginBottom: "2rem", paddingTop: "60px" }}>
@@ -57,7 +57,7 @@ const Index = () => {
           {/* Logo de Fundo — PNG com transparência real */}
           <div
             className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center"
-            style={{ opacity: 0.18 }}
+            style={{ opacity: 0.8 }}
           >
             <img
               src={meuLogo}

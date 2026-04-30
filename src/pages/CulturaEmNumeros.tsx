@@ -104,7 +104,7 @@ const CulturaEmNumeros = () => {
             {/* Logo de fundo — blend screen remove o preto no fundo azul */}
             <div
               className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center overflow-hidden rounded-2xl"
-              style={{ opacity: 0.15 }}
+              style={{ opacity: 0.50 }}
             >
               <img
                 src={meuLogo}
