@@ -14,8 +14,6 @@ import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Contato from "@/pages/Contato";
 import Whatsapp from "@/components/Whatsapp";
-import VLibras from "@/components/VLibrasWidget";
-import VLibrasWidget from "@/components/VLibrasWidget";
 
 const queryClient = new QueryClient();
 
@@ -38,9 +36,8 @@ const App = () => (
           <Route path="/relatorios" element={<Relatorios />} />
           <Route path="/contato" element={<Contato />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+        </Routes>        
         
-        <VLibras />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
