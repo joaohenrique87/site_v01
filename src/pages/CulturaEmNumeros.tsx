@@ -4,10 +4,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PDFList from "@/components/PDFList";
+import FileList from "@/components/FileList";
 import glossarioImg from "@/assets/Capa Glossario.jpg";
 import meuLogo from "@/assets/LETERING_OBIG_GRADIENTE.png"
 import solImg from "@/assets/sol.png"
+import { Download } from "lucide-react";
 
 const DashboardFrame = ({ src, title }: { src: string; title: string }) => {
   const [loading, setLoading] = useState(true);
@@ -90,11 +91,11 @@ const CulturaEmNumeros = () => {
                     democratização da informação.
                   </p>
                   <a
-                    href="src\assets\Glossario da Cultura.pdf"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="/pdfs/Glossario da Cultura.pdf" // Caminho baseado na pasta public
+                    download="Glossario-da-Cultura.pdf"
                     className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:scale-[1.03] transition-all shadow-soft"
                   >
+                    <Download className="mr-2" size={18} /> 
                     Baixar Glossário
                   </a>
                 </div>
@@ -189,9 +190,9 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://obicrestrito.shinyapps.io/censo2025/" title="Dashboard Censo Cultural de Pernambuco" />
               </CardContent>
             </Card>
-            <PDFList title="Relatórios em PDF - Censo Cultural" category="censo" />
+            <FileList title="Relatórios em PDF - Censo Cultural" category="censo" />
           </TabsContent>
-          
+
           {/* PNAB */}
           <TabsContent value="PNAB" className="space-y-8">
             <Card>
@@ -203,7 +204,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://secultpe-obic.shinyapps.io/pnab/" title="Dashboard PNAB Ciclo 1" />
               </CardContent>
             </Card>
-            <PDFList title="Relatórios em PDF - PNAB" category="pnab" />
+            <FileList title="Relatórios em PDF - PNAB" category="pnab" />
           </TabsContent>
 
           {/* ROUANET */}
@@ -217,7 +218,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://secultpe-obic.shinyapps.io/rouanet-pe/" title="Dashboard Lei Rouanet PE" />
               </CardContent>
             </Card>
-            <PDFList title="Relatórios em PDF - Rouanet" category="rouanet" />
+            <FileList title="Relatórios em PDF - Rouanet" category="rouanet" />
           </TabsContent>
 
           {/* LEI PAULO GUSTAVO */}
@@ -231,7 +232,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://obicrestrito.shinyapps.io/LPG_V2/" title="Dashboard Lei Paulo Gustavo" />
               </CardContent>
             </Card>
-            <PDFList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
+            <FileList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
           </TabsContent>
 
 

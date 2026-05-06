@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { fetchRelatorios } from "@/service/supabase";
+import { fetchRelatorios } from "@/service/api";
 import { FileText, Download, Eye } from "lucide-react";
 
 interface PDFListProps {
   title: string;
-  category: string; // Ex: "pnab", "lpg", "rouanet"
+  category: string;
 }
 
 const PDFList = ({ title, category }: PDFListProps) => {
@@ -12,26 +12,20 @@ const PDFList = ({ title, category }: PDFListProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  fetchRelatorios().then((data) => {
-    const filtrados = data.filter((arq: any) => {
-      const caminho = arq.nome_arquivo?.toLowerCase() || "";
-      
-      // 1. Verifica se pertence à categoria (pasta)
-      const pertenceACategoria = caminho.includes(category.toLowerCase());
-      
-      // 2. CRÍTICO: Verifica se a extensão é estritamente .pdf
-      const isPdf = caminho.endsWith(".pdf");
-      
-      // 3. Ignora placeholders de sistema
-      const isNotPlaceholder = !caminho.includes(".empty");
+    fetchRelatorios().then((data) => {
+      const filtrados = data.filter((arq: any) => {
+        const caminho = arq.nome_arquivo?.toLowerCase() || "";
+        const pertenceACategoria = caminho.includes(category.toLowerCase());
+        const isPdf = caminho.endsWith(".pdf");
+        const isNotPlaceholder = !caminho.includes(".empty");
 
-      return pertenceACategoria && isPdf && isNotPlaceholder;
+        return pertenceACategoria && isPdf && isNotPlaceholder;
+      });
+
+      setPdfs(filtrados);
+      setLoading(false);
     });
-
-    setPdfs(filtrados);
-    setLoading(false);
-  });
-}, [category]);
+  }, [category]);
 
   if (loading) return <div className="text-center p-4">Carregando relatórios...</div>;
 

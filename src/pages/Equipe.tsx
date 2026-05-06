@@ -9,15 +9,15 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LeiaMais from "@/components/LeiaMais";
-import manuella from "@/assets/Manuella Oliveira ObIC.png";
-import danillo from "@/assets/Danillo Rafael ObIC.jpg";
-import mariana from "@/assets/Mariana Barros ObIC.jpg";
-import joao from "@/assets/João Henrique - ObIC.jpg";
-import pedro from "@/assets/Pedro Augusto - ObiC.jpg";
-import danilo from "@/assets/Danilo Goncalves ObIC.jpg";
-import yasmim from "@/assets/yasmim.png";
-import cacau from "@/assets/cacau.png";
-import ana from "@/assets/ana.png"
+import manuella from "@/../public/imagens/manu.png";
+import danillo from "@/../public/imagens/Danillo Rafael ObIC.jpg";
+import mariana from "@/../public/imagens/Mariana Barros ObIC.jpg";
+import joao from "@/../public/imagens/João Henrique - ObIC.jpg";
+import pedro from "@/../public/imagens/Pedro Augusto - ObiC.jpg";
+import danilo from "@/../public/imagens/Danilo Goncalves ObIC.jpg";
+import yasmim from "@/../public/imagens/yasmim.png";
+import cacau from "@/../public/imagens/cacau.png";
+import ana from "@/../public/imagens/ana.png";
 import meuLogo from "@/assets/LETERING_OBIG_GRADIENTE.png";
 
 const institucional = [

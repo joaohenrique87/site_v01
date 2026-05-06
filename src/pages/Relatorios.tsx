@@ -1,54 +1,25 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { fetchRelatorios } from "@/service/supabase";
-import { FileText, Download, Eye, Search, ChevronDown } from "lucide-react";
-import glossarioIMG from "@/assets/Capa Glossario.jpg";
+import { FileText, Download, Eye, Search, Filter, Calendar } from "lucide-react";
+import glossarioImg from "@/assets/Capa Glossario.jpg";
+import { fetchRelatorios } from "@/service/api";
 
-const CATEGORIAS = [
-  { value: "todos", label: "Todos" },
-  { value: "lpg", label: "LPG" },
-  { value: "pnab", label: "PNAB" },
-  { value: "premios", label: "Prêmios" },
-  { value: "escutas", label: "Escutas" },
-  {value: "estudos", label: "Estudos"}
-];
-
-// Função para extrair o ano do nome do arquivo
-const extrairAno = (nome: string) => {
-  const match = nome.match(/\b(20\d{2})\b/);
-  return match ? match[1] : null;
-};
-
-const handleDownload = async (url: string, nome: string) => {
-  try {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = `${nome.split('/').pop()}`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (e) {
-    console.error("Erro ao baixar PDF:", e);
-  }
+type Arquivo = {
+  id: string;
+  nome_arquivo: string;
+  categoria: string;
+  linkDownload: string;
 };
 
 const RelatoriosPDF = () => {
-  const [todos, setTodos] = useState<any[]>([]);
+  const [todos, setTodos] = useState<Arquivo[]>([]);
   const [loading, setLoading] = useState(true);
   const [busca, setBusca] = useState("");
-  const [categoriaAtiva, setCategoriaAtiva] = useState("todos");
-  
-  // Controle do filtro de anos
-  const [anosAtivos, setAnosAtivos] = useState<string[]>([]);
-  const [dropdownAberto, setDropdownAberto] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // Estados de Filtro
+  const [categoriaAtiva, setCategoriaAtiva] = useState("todos");
+  const [anoAtivo, setAnoAtivo] = useState("todos");
 
   useEffect(() => {
     fetchRelatorios().then((data) => {
@@ -57,297 +28,188 @@ const RelatoriosPDF = () => {
     });
   }, []);
 
-  // Fecha o dropdown se clicar fora dele
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownAberto(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Anos disponíveis extraídos dos arquivos
-  const anosDisponiveis = useMemo(() => {
+  // Extração de anos e categorias únicas para os botões
+  const filtrosDisponiveis = useMemo(() => {
     const anos = new Set<string>();
+    const cats = new Set<string>();
+
     todos.forEach(arq => {
-      const ano = extrairAno(arq.nome_arquivo || "");
-      if (ano) anos.add(ano);
+      const match = arq.nome_arquivo.match(/\b(20\d{2})\b/);
+      if (match) anos.add(match[1]);
+      if (arq.categoria) cats.add(arq.categoria);
     });
-    return Array.from(anos).sort((a, b) => b.localeCompare(a));
+
+    return {
+      anos: ["todos", ...Array.from(anos).sort((a, b) => b.localeCompare(a))],
+      categorias: ["todos", ...Array.from(cats).sort()]
+    };
   }, [todos]);
 
-  // Função para marcar/desmarcar um ano
-  const toggleAno = (ano: string) => {
-    setAnosAtivos((prev) => 
-      prev.includes(ano) ? prev.filter((a) => a !== ano) : [...prev, ano]
-    );
-  };
+  // Lógica de Filtragem Cruzada (Busca + Tipo + Ano)
+  const filtrados = useMemo(() => {
+    return todos.filter((arq) => {
+      const nomeLower = arq.nome_arquivo.toLowerCase();
+      const buscaLower = busca.toLowerCase();
 
-  const filtrados = todos.filter((arq) => {
-    const caminhoCompleto = arq?.nome_arquivo || "";
-    const pastaRaiz = caminhoCompleto.split('/')[0].toLowerCase();
-    const nomeExibicao = caminhoCompleto.split('/').pop() || "";
+      const matchBusca = nomeLower.includes(buscaLower);
+      const matchCategoria = categoriaAtiva === "todos" || arq.categoria === categoriaAtiva;
+      const matchAno = anoAtivo === "todos" || nomeLower.includes(anoAtivo);
 
-    const mapCategorias: Record<string, string> = {
-      "premios": "premios",
-      "pnab": "pnab",
-      "lpg": "lpg",
-      "lab": "lab",
-      "escutas": "escutas",
-      "estudos": "estudos"
-    };
-    const categoriaIdentificada = mapCategorias[pastaRaiz] || pastaRaiz;
-
-    const matchBusca = nomeExibicao.toLowerCase().includes(busca.toLowerCase());
-    
-    const matchCategoria =
-      categoriaAtiva === "todos" ||
-      categoriaIdentificada === categoriaAtiva ||
-      (categoriaAtiva === "escutas" && nomeExibicao.toLowerCase().includes("escuta"));
-
-    const anoArquivo = extrairAno(nomeExibicao);
-    const matchAno = anosAtivos.length === 0 || (anoArquivo && anosAtivos.includes(anoArquivo));
-
-    const isSystemFile = nomeExibicao.includes('.empty');
-
-    return matchBusca && matchCategoria && matchAno && !isSystemFile;
-  });
+      return matchBusca && matchCategoria && matchAno;
+    });
+  }, [todos, busca, categoriaAtiva, anoAtivo]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background font-sans">
       <Header />
-      <main className="flex-1 container py-8 md:py-12 px-4">
-        <section className="py-10 bg-muted/20 rounded-2xl mb-12 border border-border">
-          <div className="max-w-5xl mx-auto px-6">
 
-            <div className="flex flex-col md:flex-row items-center gap-8">
-
-              {/* Capa */}
-              <div className="w-full md:w-1/3 flex justify-center">
-                <img
-                  src={glossarioIMG}
-                  alt="Glossário da Cultura"
-                  className="
-            w-52
-            md:w-60
-            rounded-xl
-            shadow-medium
-            hover:scale-[1.02]
-            transition-all
-          "
-                />
-              </div>
-
-              {/* Texto */}
-              <div className="flex-1">
-
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-                  Glossário da Cultura
-                </h2>
-
-                <p className="text-muted-foreground leading-relaxed text-justify mb-5">
-                  O Glossário da Cultura reúne termos técnicos e expressões utilizadas nas
-                  políticas culturais, facilitando a compreensão de editais, programas e
-                  instrumentos de fomento. O material foi desenvolvido para apoiar agentes
-                  culturais, gestores e pesquisadores, promovendo maior transparência e
-                  democratização da informação.
-                </p>
-
-                <a
-                  href="src\assets\Glossario da Cultura.pdf"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="
-            inline-flex
-            items-center
-            bg-primary
-            text-white
-            px-6
-            py-3
-            rounded-xl
-            font-semibold
-            hover:scale-[1.03]
-            transition-all
-            shadow-soft
-          "
-                >
-                  Baixar Glossário
-                </a>
-
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* Cabeçalho */}
-        <div className="text-center mb-8 md:mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">Relatórios em PDF</h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Pesquise e filtre nossos relatórios por categoria e ano
-          </p>
-        </div>
-
-        {/* Busca Principal (Sozinha na linha) */}
-        <div className="relative max-w-2xl mx-auto mb-6 md:mb-8">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Buscar por nome..."
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm"
-          />
-        </div>
-
-        {/* Pills de categoria */}
-        <div className="flex flex-wrap justify-center gap-2 mb-6">
-          {CATEGORIAS.map((cat) => (
-            <button
-              key={cat.value}
-              onClick={() => setCategoriaAtiva(cat.value)}
-              className="px-4 md:px-5 py-2 rounded-full border-2 font-semibold text-sm transition-all duration-200"
-              style={{
-                borderColor: categoriaAtiva === cat.value ? 'hsl(var(--primary))' : 'hsl(var(--border))',
-                background: categoriaAtiva === cat.value ? 'hsl(var(--primary))' : 'transparent',
-                color: categoriaAtiva === cat.value ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground))',
-              }}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Dropdown Customizado de Ano (Abaixo das categorias) */}
-        <div className="flex justify-center mb-8 md:mb-10">
-          <div className="relative min-w-[220px]" ref={dropdownRef}>
-            <button
-              onClick={() => setDropdownAberto(!dropdownAberto)}
-              className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-border bg-background text-foreground hover:bg-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm transition-colors"
-            >
-              <span className="truncate pr-2 font-medium">
-                {anosAtivos.length === 0
-                  ? "Filtrar por ano"
-                  : anosAtivos.length === 1
-                  ? `Ano: ${anosAtivos[0]}`
-                  : `${anosAtivos.length} anos selecionados`}
-              </span>
-              <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${dropdownAberto ? 'rotate-180' : ''}`} />
-            </button>
-
-            {dropdownAberto && (
-              <div className="absolute z-50 w-full min-w-[220px] left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-slate-950 border border-border rounded-xl shadow-xl max-h-60 overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
-                <div 
-                  className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer border-b border-border text-sm flex items-center gap-3 transition-colors"
-                  onClick={() => { setAnosAtivos([]); setDropdownAberto(false); }}
-                >
-                  <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${anosAtivos.length === 0 ? 'bg-primary border-primary text-white dark:text-primary-foreground' : 'border-slate-300 dark:border-slate-700 bg-transparent'}`}>
-                    {anosAtivos.length === 0 && <span className="text-[10px] font-bold">✓</span>}
-                  </div>
-                  <span className={anosAtivos.length === 0 ? "font-semibold text-foreground" : "text-muted-foreground"}>Todos os anos</span>
+      <main className="flex-1 container py-8 md:py-12 px-4 mt-24">
+        {/* Seção Glossário */}
+        <div className="rounded-2xl mb-[43.78px] border border-border shadow-sm overflow-hidden">
+          <section className="py-10 bg-[#2E2EB8] relative min-h-[411.76px] flex items-center">
+            <div className="relative z-20 max-w-5xl mx-auto px-6 w-full">
+              <div className="flex flex-col md:flex-row items-center gap-8 h-full py-4">
+                <div className="w-full md:w-1/3 flex justify-center">
+                  <img
+                    src={glossarioImg}
+                    alt="Glossário da Cultura"
+                    className="w-52 md:w-60 rounded-xl shadow-medium hover:scale-[1.02] transition-all"
+                  />
                 </div>
 
-                {anosDisponiveis.map((ano) => {
-                  const isActive = anosAtivos.includes(ano);
-                  return (
-                    <label 
-                      key={ano} 
-                      className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer text-sm flex items-center gap-3 transition-colors m-0"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={isActive}
-                        onChange={() => toggleAno(ano)}
-                        className="hidden" 
-                      />
-                      <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${isActive ? 'bg-primary border-primary text-white dark:text-primary-foreground' : 'border-slate-300 dark:border-slate-700 bg-transparent'}`}>
-                        {isActive && <span className="text-[10px] font-bold">✓</span>}
-                      </div>
-                      <span className={isActive ? "font-semibold text-foreground" : "text-muted-foreground"}>{ano}</span>
-                    </label>
-                  );
-                })}
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                    Glossário da Cultura
+                  </h2>
+                  <p className="text-white/80 leading-relaxed text-justify mb-5">
+                    O Glossário da Cultura reúne termos técnicos e expressões utilizadas nas
+                    políticas culturais, facilitando a compreensão de editais, programas e
+                    instrumentos de fomento.
+                  </p>
+                  <a
+                    href="/pdfs/Glossario da Cultura.pdf" 
+                    download="Glossario-da-Cultura.pdf"
+                    className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all shadow-soft"
+                  >
+                    <Download className="mr-2" size={18} /> 
+                    Baixar Glossário
+                  </a>
+                </div>
               </div>
-            )}
+            </div>
+          </section>
+        </div>
+
+        {/* ÁREA DE FILTROS EMPILHADOS */}
+        <div className="flex flex-col gap-6 mb-12 max-w-4xl mx-auto">
+          {/* 1. Barra de Pesquisa */}
+          <div className="relative w-full">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Pesquisar por nome do relatório..."
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-primary/10 focus:border-primary bg-card text-lg transition-all outline-none"
+            />
+          </div>
+
+          {/* 2. Filtro por Tipo */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <Filter size={14} /> Filtrar por Tipo
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {filtrosDisponiveis.categorias.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setCategoriaAtiva(cat)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium border transition-all ${
+                    categoriaAtiva === cat
+                      ? "bg-primary text-white border-primary shadow-md"
+                      : "bg-white text-muted-foreground border-border hover:border-primary/50"
+                  }`}
+                >
+                  {cat === "todos" ? "Todos os Tipos" : cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 3. Filtro por Ano */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <Calendar size={14} /> Filtrar por Ano
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {filtrosDisponiveis.anos.map((ano) => (
+                <button
+                  key={ano}
+                  onClick={() => setAnoAtivo(ano)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium border transition-all ${
+                    anoAtivo === ano
+                      ? "bg-[#16a34a] text-white border-[#16a34a] shadow-md"
+                      : "bg-white text-muted-foreground border-border hover:border-[#16a34a]/50"
+                  }`}
+                >
+                  {ano === "todos" ? "Todos os Anos" : ano}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Lista de relatórios */}
+        {/* Grid de Relatórios */}
         {loading ? (
-          <div className="text-center py-20 text-muted-foreground animate-pulse">Carregando relatórios...</div>
-        ) : filtrados.length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">
-            <FileText className="mx-auto h-12 w-12 mb-4 opacity-40" />
-            <p>Nenhum relatório encontrado para seus filtros.</p>
-          </div>
+          <div className="text-center py-20 text-muted-foreground animate-pulse font-bold">Carregando acervo local...</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtrados.map((arq) => {
-              const anoArquivoExibicao = extrairAno(arq.nome_arquivo || "");
-              
-              return (
-                <div
-                  key={arq.id}
-                  className="relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 hover:shadow-lg"
-                  onMouseEnter={() => setHoveredId(arq.id)}
-                  onMouseLeave={() => setHoveredId(null)}
-                >
-                  <div className="p-4 md:p-5 flex items-start gap-3 md:gap-4">
-                    <div className="p-2.5 md:p-3 bg-primary/10 rounded-lg flex-shrink-0">
-                      <FileText className="h-5 w-5 md:h-6 md:w-6 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-foreground mb-1 line-clamp-2 capitalize text-xs md:text-sm">
-                        {arq.nome_arquivo?.split('/').pop()}
-                      </h3>
-                      <div className="flex items-center gap-2 flex-wrap mt-1.5">
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(arq.created_at).toLocaleDateString("pt-BR")}
-                        </p>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase">
-                          {arq.nome_arquivo?.split('/')[0]}
-                        </span>
-                        {anoArquivoExibicao && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-border text-muted-foreground">
-                            {anoArquivoExibicao}
-                          </span>
-                        )}
+          <>
+            <p className="text-sm text-muted-foreground mb-4 font-medium">
+              {filtrados.length} {filtrados.length === 1 ? "relatório encontrado" : "relatórios encontrados"}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtrados.map((arq) => (
+                <div key={arq.id} className="bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                        <FileText size={24} />
                       </div>
+                      <span className="text-[10px] font-black uppercase bg-muted px-2 py-1 rounded text-muted-foreground">
+                        {arq.categoria}
+                      </span>
                     </div>
+                    <h3 className="text-sm font-bold text-foreground mb-6 line-clamp-2 leading-tight h-10">
+                      {arq.nome_arquivo.replace(".pdf", "")}
+                    </h3>
                   </div>
 
-                  {/* Botões */}
-                  <div className={`
-                    flex items-center justify-end gap-2 px-4 pb-3
-                    md:absolute md:inset-0 md:bg-background/95 md:justify-center md:px-0 md:pb-0
-                    md:transition-opacity md:duration-300
-                    ${hoveredId === arq.id ? 'md:opacity-100' : 'md:opacity-0 md:pointer-events-none'}
-                  `}>
+                  <div className="flex flex-col gap-2">
                     <button
                       onClick={() => window.open(arq.linkDownload, "_blank")}
-                      className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-lg font-semibold text-xs transition-all"
-                      style={{ background: 'hsl(var(--primary))', color: 'white' }}
-                      title="Visualizar"
+                      className="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-700 py-3 rounded-xl text-xs font-bold hover:bg-slate-200 transition-colors"
                     >
-                      <Eye className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                      <span className="hidden sm:inline">Visualizar</span>
+                      <Eye size={16} /> Visualizar Relatório
                     </button>
-                    <button
-                      onClick={() => handleDownload(arq.linkDownload, arq.nome_arquivo)}
-                      className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-lg bg-green-600 text-white font-semibold text-xs hover:bg-green-700 transition-all"
-                      title="Download"
+                    <a
+                      href={arq.linkDownload}
+                      download={arq.nome_arquivo}
+                      className="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-xl text-xs font-bold hover:opacity-90 transition-all shadow-sm"
                     >
-                      <Download className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                      <span className="hidden sm:inline">Download</span>
-                    </button>
+                      <Download size={16} /> Baixar PDF
+                    </a>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+
+            {filtrados.length === 0 && (
+              <div className="text-center py-20 bg-muted/10 rounded-3xl border-2 border-dashed border-border">
+                <p className="text-muted-foreground font-medium">Nenhum documento atende aos filtros selecionados.</p>
+                <button onClick={() => { setAnoAtivo("todos"); setCategoriaAtiva("todos"); setBusca(""); }} className="text-primary font-bold mt-2 underline">Limpar todos os filtros</button>
+              </div>
+            )}
+          </>
         )}
       </main>
       <Footer />

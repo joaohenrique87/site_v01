@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { fetchRelatorios } from "./service/supabase";
+import { fetchRelatorios } from "@/service/api";
 import { Loader2, ChevronLeft, ChevronRight, Eye, Download } from "lucide-react";
 import "./Carrossel.css";
 
@@ -10,11 +10,32 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = PdfWorker;
 
 const PdfCard = ({ arq }) => {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null); // Ref para observar visibilidade
   const [loaded, setLoaded] = useState(false);
   const [erro, setErro] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
+  // 1. Observer: Só ativa o carregamento quando o card aparece no carrossel
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Uma vez visível, não precisa mais observar
+        }
+      },
+      { threshold: 0.1, rootMargin: "50px" } // Carrega um pouco antes de entrar na tela
+    );
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // 2. Renderização Otimizada do PDF
+  useEffect(() => {
+    if (!isVisible) return; // Interrompe se não estiver visível
+
     let cancelled = false;
 
     const renderCapa = async () => {
@@ -26,7 +47,7 @@ const PdfCard = ({ arq }) => {
           url: urlPdf,
           cMapUrl: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/cmaps/",
           cMapPacked: true,
-          disableAutoFetch: true,
+          disableAutoFetch: true, // Não baixa o PDF inteiro de uma vez
           disableStream: true,
         });
 
@@ -36,8 +57,9 @@ const PdfCard = ({ arq }) => {
         const canvas = canvasRef.current;
         if (!canvas || cancelled) return;
 
-        const viewport = page.getViewport({ scale: 1.2 });
-        const context = canvas.getContext("2d");
+        // Scale 1.0 é suficiente para miniaturas e economiza muita RAM
+        const viewport = page.getViewport({ scale: 1.0 }); 
+        const context = canvas.getContext("2d", { alpha: false }); // alpha: false acelera o render
 
         canvas.width = viewport.width;
         canvas.height = viewport.height;
@@ -53,20 +75,22 @@ const PdfCard = ({ arq }) => {
 
     renderCapa();
     return () => { cancelled = true; };
-  }, [arq]);
+  }, [arq, isVisible]);
 
   const nomeArquivo = arq.nome_arquivo?.split("/").pop() || "Documento";
 
   return (
     <div
+      ref={containerRef}
       className="card-relatorio-novo"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Capa do PDF — área grande */}
       <div className="card-capa-nova">
         {!loaded && !erro && (
-          <div className="capa-placeholder"><Loader2 className="animate-spin text-gray-400" size={32} /></div>
+          <div className="capa-placeholder">
+            <Loader2 className="animate-spin text-gray-400" size={32} />
+          </div>
         )}
         {erro && (
           <div className="capa-erro-nova">
@@ -77,17 +101,19 @@ const PdfCard = ({ arq }) => {
         <canvas
           ref={canvasRef}
           className="canvas-pdf"
-          style={{ display: loaded ? "block" : "none" }}
+          style={{ 
+            display: loaded ? "block" : "none",
+            width: "100%", 
+            height: "auto" 
+          }}
         />
 
-        {/* Overlay de ações no hover */}
         <div className={`card-overlay ${hovered ? "card-overlay--visible" : ""}`}>
           <a
             href={arq.linkDownload}
             target="_blank"
             rel="noreferrer"
             className="card-btn card-btn--view"
-            title="Visualizar"
             onClick={(e) => e.stopPropagation()}
           >
             <Eye size={18} />
@@ -97,7 +123,6 @@ const PdfCard = ({ arq }) => {
             href={arq.linkDownload}
             download
             className="card-btn card-btn--download"
-            title="Download"
             onClick={(e) => e.stopPropagation()}
           >
             <Download size={18} />
@@ -106,7 +131,6 @@ const PdfCard = ({ arq }) => {
         </div>
       </div>
 
-      {/* Barra de nome — compacta */}
       <div className="card-nome-barra">
         <span className="card-nome-texto" title={nomeArquivo}>
           {nomeArquivo}
@@ -122,7 +146,7 @@ const CarrosselRelatorio = () => {
   const [index, setIndex] = useState(0);
   const [visiveis, setVisiveis] = useState(4);
 
-  // Responsividade: número de cards visíveis por largura de tela
+  // Ajuste de responsividade
   useEffect(() => {
     const calcVisiveis = () => {
       const w = window.innerWidth;
@@ -137,27 +161,21 @@ const CarrosselRelatorio = () => {
   }, []);
 
   useEffect(() => {
-  fetchRelatorios()
-    .then((dados) => {
-      console.log("Todos os dados:", dados);
-      console.log("Categorias únicas:", [...new Set(dados.map(d => d.categoria))]);
-      
-      const validos = (dados || []).filter((arq) => {
-        const isPdf = arq.nome_arquivo?.toLowerCase().endsWith(".pdf");
-        const isPesquisas = arq.categoria?.toLowerCase() === "pesquisas";
-        console.log(`Arquivo: ${arq.nome_arquivo} | categoria: "${arq.categoria}" | isPdf: ${isPdf} | isPesquisas: ${isPesquisas}`);
-        return isPdf && !isPesquisas;
+    fetchRelatorios()
+      .then((dados) => {
+        const validos = (dados || []).filter((arq) => {
+          const isPdf = arq.nome_arquivo?.toLowerCase().endsWith(".pdf");
+          const isPesquisas = arq.categoria?.toLowerCase() === "pesquisas";
+          return isPdf && !isPesquisas;
+        });
+        setArquivos(validos);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar relatórios:", err);
+        setLoading(false);
       });
-
-      console.log("Válidos após filtro:", validos);
-      setArquivos(validos);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error("Erro:", err);
-      setLoading(false);
-    });
-}, []);
+  }, []);
 
   if (loading)
     return (
@@ -172,14 +190,18 @@ const CarrosselRelatorio = () => {
 
   return (
     <div className="container-carrossel" style={{ maxWidth: "100%", overflow: "hidden" }}>
-      <button className="seta esquerda" onClick={prev} disabled={index === 0} aria-label="Anterior">
+      <button className="seta esquerda" onClick={prev} disabled={index === 0}>
         <ChevronLeft size={26} />
       </button>
 
       <div className="carrossel-wrapper">
         <div
           className="carrossel-faixa"
-          style={{ transform: `translateX(-${index * (100 / visiveis)}%)` }}
+          style={{ 
+            transform: `translateX(-${index * (100 / visiveis)}%)`,
+            transition: "transform 0.4s ease-out",
+            willChange: "transform" // Ajuda na performance da animação
+          }}
         >
           {arquivos.map((arq) => (
             <div key={arq.id} className="carrossel-item" style={{ width: `${100 / visiveis}%` }}>
@@ -189,7 +211,7 @@ const CarrosselRelatorio = () => {
         </div>
       </div>
 
-      <button className="seta direita" onClick={next} disabled={index >= maxIndex} aria-label="Próximo">
+      <button className="seta direita" onClick={next} disabled={index >= maxIndex}>
         <ChevronRight size={26} />
       </button>
     </div>
