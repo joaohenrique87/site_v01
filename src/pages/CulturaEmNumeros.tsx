@@ -229,7 +229,7 @@ const CulturaEmNumeros = () => {
                 <CardDescription>Visualização interativa dos dados da execução da Lei Paulo Gustavo</CardDescription>
               </CardHeader>
               <CardContent>
-                <DashboardFrame src="https://obicrestrito.shinyapps.io/LPG_V2/" title="Dashboard Lei Paulo Gustavo" />
+                <DashboardFrame src="https://obic.shinyapps.io/LPG_V2/" title="Dashboard Lei Paulo Gustavo" />
               </CardContent>
             </Card>
             <FileList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
