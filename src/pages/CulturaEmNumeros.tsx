@@ -122,7 +122,7 @@ const CulturaEmNumeros = () => {
                 <CardDescription>Acesse os dados do Censo Cultural de Pernambuco</CardDescription>
               </CardHeader>
               <CardContent>
-                <DashboardFrame src="https://obicrestrito.shinyapps.io/censo2025/" title="Dashboard Censo Cultural" />
+                <DashboardFrame src="https://obic.shinyapps.io/censo2025/" title="Dashboard Censo Cultural" />
               </CardContent>
             </Card>
             <FileList title="Relatórios em PDF - Censo Cultural" category="censo" />
