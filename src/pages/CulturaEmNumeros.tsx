@@ -70,7 +70,7 @@ const CulturaEmNumeros = () => {
                   <p className="text-white/80 leading-relaxed text-justify mb-5">
                     O Glossário da Cultura reúne termos técnicos e expressões utilizadas nas políticas culturais, facilitando a compreensão de editais, programas e instrumentos de fomento. O material foi desenvolvido para apoiar agentes culturais, gestores e pesquisadores, promovendo maior transparência e democratização da informação.
                   </p>
-                  <a href="/pdfs/Glossario da Cultura.pdf" download="Glossario-da-Cultura.pdf" className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:scale-[1.03] transition-all shadow-soft">
+                  <a href="/glossario.pdf" download="Glossario-da-Cultura.pdf" className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:scale-[1.03] transition-all shadow-soft">
                     <Download className="mr-2" size={18} /> Baixar Glossário
                   </a>
                 </div>

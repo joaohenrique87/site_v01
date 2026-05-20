@@ -87,7 +87,7 @@ const RelatoriosPDF = () => {
                     instrumentos de fomento.
                   </p>
                   <a
-                    href="/pdfs/Glossario da Cultura.pdf" 
+                    href="/glossario.pdf" 
                     download="Glossario-da-Cultura.pdf"
                     className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all shadow-soft"
                   >
