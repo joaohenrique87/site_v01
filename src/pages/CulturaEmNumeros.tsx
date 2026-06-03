@@ -44,7 +44,7 @@ const DashboardFrame = ({ src, title }: { src: string; title: string }) => {
   );
 };
 
-const VALID_TABS = ["lpg", "PNAB", "rouanet", "censo", "censo_snc"];
+const VALID_TABS = ["lpg", "PNAB", "rouanet", "censo", "censo_snc","lab"];
 
 const CulturaEmNumeros = () => {
   const [searchParams] = useSearchParams();
@@ -100,6 +100,7 @@ const CulturaEmNumeros = () => {
             <TabsTrigger value="PNAB" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">PNAB</TabsTrigger>
             <TabsTrigger value="rouanet" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Rouanet em Pernambuco</TabsTrigger>
             <TabsTrigger value="lpg" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm lg:col-start-1">Lei Paulo Gustavo</TabsTrigger>
+            <TabsTrigger value="lab" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Lei Aldir Blanc de Emergência Cultural</TabsTrigger>
           </TabsList>
 
           <TabsContent value="censo_snc" className="space-y-8">
@@ -166,6 +167,20 @@ const CulturaEmNumeros = () => {
             </Card>
             <FileList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
           </TabsContent>
+
+        <TabsContent value="lab" className="space-y-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Dashboard - Lei Aldir Blanc de Emergência Cultural</CardTitle>
+                <CardDescription>Visualização interativa dos dados da execução da Lei Aldir Blanc</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DashboardFrame src="https://secultpe-obic.shinyapps.io/LABOBIC/" title="Dashboard Lei Aldir Blanc de Emergência Cultural" />
+              </CardContent>
+            </Card>
+            <FileList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
+          </TabsContent>
+
         </Tabs>
       </main>
       <Footer />
