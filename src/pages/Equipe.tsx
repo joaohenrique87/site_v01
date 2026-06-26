@@ -19,6 +19,7 @@ import yasmim from "@/../public/imagens/yasmim.png";
 import cacau from "@/../public/imagens/cacau.png";
 import ana from "@/../public/imagens/ana.png";
 import meuLogo from "@/assets/LETERING_OBIG_GRADIENTE.png";
+import lili from "@/../public/imagens/Lili.jpg"
 
 const institucional = [
   {
@@ -90,6 +91,14 @@ const teamMembers = [
     initials: "DG",
     photo: danilo,
   },
+  {
+    name: "Liliane Gobetti Fagundes",
+    role: "Analista de dados e Pesquisadora",
+    bio: "Bacharela em Ciências Sociais pela Universidade Federal do Rio Grande do Sul (UFRGS). Mestre em Ciência Política pela Universidade Federal de Pernambuco (UFPE) e atualmente doutoranda em Ciência Política pela mesma universidade. Integra o ObIC desde setembro de 2023.",
+    initials: "LGF",
+    photo: lili,
+  },
+
 ];
 
 const Equipe = () => {
