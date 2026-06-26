@@ -51,9 +51,7 @@ const Pesquisas = () => {
           return nome.endsWith(".pdf");
         case "base":
           return [".xlsx", ".csv", ".xls", ".zip"].some(ext => nome.endsWith(ext));
-        case "formulario":
-          return nome.includes("formulario");
-        default:
+          default:
           return false;
       }
     });
@@ -135,7 +133,7 @@ const Pesquisas = () => {
                     <Loader2 className="animate-spin text-primary" />
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <BotaoArquivo
                       icon={<FileText />}
                       label="Relatório Técnico"
@@ -147,13 +145,7 @@ const Pesquisas = () => {
                       label="Base de Dados"
                       href={obterLinkArquivo(p.id, "base")}
                       color="bg-green-600"
-                    />
-                    <BotaoArquivo
-                      icon={<ClipboardList />}
-                      label="Questionário"
-                      href={obterLinkArquivo(p.id, "formulario")}
-                      color="bg-orange-500"
-                    />
+                    />                    
                   </div>
                 )}
               </div>
