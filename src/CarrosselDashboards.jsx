@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./Carrossel.css";
 
 import pnab from "@/assets/pnab.png";
-import lpg from "@/assets/lpg.jpeg";
+import lpg from "@/assets/lpg.png";
 import rouanet from "@/assets/rouanet.png";
 import censo from "@/assets/Censo-dash.png";
 
