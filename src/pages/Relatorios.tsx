@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { FileText, Download, Eye, Search, Filter, Calendar, Loader2 } from "lucide-react";
+import meuLogo from "@/assets/LETERING_OBIG_GRADIENTE.png";
+import solImg from "@/assets/sol.png";
 import glossarioImg from "@/assets/Capa Glossario.jpg";
 import { fetchRelatorios } from "@/service/api";
 
@@ -289,15 +291,15 @@ const RelatoriosPDF = () => {
   const temFiltroAtivo = busca !== "" || categoriaAtiva !== "todos" || anoAtivo !== "todos";
 
   return (
-    <div className="min-h-screen flex flex-col bg-background font-sans">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
 
-      <main className="flex-1 container py-8 md:py-12 px-4 mt-24">
+      <main className="flex-1 container pt-[141.81px] pb-[43.78px]">
 
-        {/* Seção Glossário */}
-        <div className="rounded-2xl mb-[43.78px] border border-border shadow-sm overflow-hidden">
-          <section className="py-10 bg-[#2E2EB8] relative min-h-[411.76px] flex items-center">
-            <div className="relative z-20 max-w-5xl mx-auto px-6 w-full">
+        {/* Glossário */}
+        <div className="rounded-2xl mb-[43.78px] border border-border shadow-sm" style={{ minHeight: "411.76px" }}>
+          <section className="py-10 bg-[#2E2EB8] rounded-2xl relative" style={{ minHeight: "411.76px" }}>
+            <div className="relative z-20 max-w-5xl mx-auto px-6" style={{ minHeight: "411.76px" }}>
               <div className="flex flex-col md:flex-row items-center gap-8 h-full py-4">
                 <div className="w-full md:w-1/3 flex justify-center">
                   <img
@@ -306,26 +308,32 @@ const RelatoriosPDF = () => {
                     className="w-52 md:w-60 rounded-xl shadow-medium hover:scale-[1.02] transition-all"
                   />
                 </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Glossário da Cultura
-                  </h2>
+                <div className="flex-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Glossário da Cultura</h2>
                   <p className="text-white/80 leading-relaxed text-justify mb-5">
-                    O Glossário da Cultura reúne termos técnicos e expressões utilizadas nas
-                    políticas culturais, facilitando a compreensão de editais, programas e
-                    instrumentos de fomento.
+                    O Glossário da Cultura reúne termos técnicos e expressões utilizadas nas políticas culturais,
+                    facilitando a compreensão de editais, programas e instrumentos de fomento. O material foi
+                    desenvolvido para apoiar agentes culturais, gestores e pesquisadores, promovendo maior
+                    transparência e democratização da informação.
                   </p>
                   <a
                     href="/glossario.pdf"
                     download="Glossario-da-Cultura.pdf"
-                    className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all shadow-soft"
+                    className="inline-flex items-center bg-white text-[#2E2EB8] px-6 py-3 rounded-xl font-semibold hover:scale-[1.03] transition-all shadow-soft"
                   >
-                    <Download className="mr-2" size={18} />
-                    Baixar Glossário
+                    <Download className="mr-2" size={18} /> Baixar Glossário
                   </a>
                 </div>
               </div>
             </div>
+            <div
+              className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center overflow-hidden rounded-2xl"
+              style={{ opacity: 0.50 }}
+            >
+              <img src={meuLogo} alt="" aria-hidden="true" style={{ width: "150%", maxWidth: "none", mixBlendMode: "screen" }} />
+            </div>
+            <img src={solImg} alt="" aria-hidden="true" className="pointer-events-none" style={{ position: "absolute", bottom: "-60px", right: "-60px", width: "280px", height: "280px", objectFit: "contain", mixBlendMode: "screen", opacity: 0.5, zIndex: 11 }} />
+            <img src={solImg} alt="" aria-hidden="true" className="pointer-events-none" style={{ position: "absolute", top: "-40px", left: "-40px", width: "180px", height: "180px", objectFit: "contain", mixBlendMode: "screen", opacity: 0.3, transform: "rotate(20deg)", zIndex: 11 }} />
           </section>
         </div>
 
