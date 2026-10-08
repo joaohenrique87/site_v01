@@ -260,7 +260,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://secultpe-obic.shinyapps.io/pnab/" title="Dashboard PNAB Ciclo 1" />
               </CardContent>
             </Card>
-            <FileList title="Relatórios em PDF - PNAB" category="pnab" />
+            <FileList title="Relatórios em PDF - PNAB" category="pnabi" />
           </TabsContent>
 
           <TabsContent value="rouanet" className="space-y-8">

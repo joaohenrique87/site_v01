@@ -14,12 +14,15 @@ const PDFList = ({ title, category }: PDFListProps) => {
   useEffect(() => {
     fetchRelatorios().then((data) => {
       const filtrados = data.filter((arq: any) => {
-        const caminho = arq.nome_arquivo?.toLowerCase() || "";
-        const pertenceACategoria = caminho.includes(category.toLowerCase());
-        const isPdf = caminho.endsWith(".pdf");
-        const isNotPlaceholder = !caminho.includes(".empty");
+        // 1. COMPARAÇÃO DE CATEGORIA: Olhamos diretamente para a propriedade gerada pelo script
+        const matchCategoria = arq.categoria?.toLowerCase() === category.toLowerCase();
+        
+        // 2. VALIDAÇÃO DE ARQUIVO: Garantimos que é um PDF válido
+        const nomeArquivo = arq.nome_arquivo?.toLowerCase() || "";
+        const isPdf = nomeArquivo.endsWith(".pdf");
+        const isNotPlaceholder = !nomeArquivo.includes(".empty");
 
-        return pertenceACategoria && isPdf && isNotPlaceholder;
+        return matchCategoria && isPdf && isNotPlaceholder;
       });
 
       setPdfs(filtrados);

@@ -10,7 +10,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LeiaMais from "@/components/LeiaMais";
 import manuella from "@/../public/imagens/manu.png";
-import danillo from "@/../public/imagens/Danillo Rafael ObIC.jpg";
+// import danillo from "@/../public/imagens/Danillo Rafael ObIC.jpg";
 import mariana from "@/../public/imagens/Mariana Barros ObIC.jpg";
 import joao from "@/../public/imagens/João Henrique - ObIC.jpg";
 import pedro from "@/../public/imagens/Pedro Augusto - ObiC.jpg";
@@ -56,17 +56,17 @@ const teamMembers = [
     initials: "MO",
     photo: manuella,
   },
-  {
-    name: "Danillo Rafael",
-    role: "Analista de dados e Pesquisador",
-    bio: "Doutorando e Mestre em Ciência Política pela Universidade Federal de Pernambuco, Bacharel em Relações Internacionais. Tem interesse em políticas públicas, análise de dados e métodos de pesquisa. Integra o Observatório desde julho de 2022.",
-    initials: "DR",
-    photo: danillo,
-  },
+  // {
+  //   name: "Danillo Rafael",
+  //   role: "Analista de dados e Pesquisador",
+  //   bio: "Doutorando e Mestre em Ciência Política pela Universidade Federal de Pernambuco, Bacharel em Relações Internacionais. Tem interesse em políticas públicas, análise de dados e métodos de pesquisa. Integra o Observatório desde julho de 2022.",
+  //   initials: "DR",
+  //   photo: danillo,
+  // },
   {
     name: "Mariana Barros",
     role: "Analista de dados e Pesquisador",
-    bio: "Mestranda em Políticas Públicas pela Universidade Federal de Pernambuco, Bacharel em Ciência Política com Ênfase em Relações Internacionais pela Universidade Federal de Pernambuco (UFPE). Tem interesse pela área de políticas públicas, políticas culturais, análise de dados. Integra o Observatório desde julho de 2022.",
+    bio: "Mestranda em Políticas Públicas pela Universidade Federal de Pernambuco, Bacharel em Ciência Política com Ênfase em Relações Internacionais pela mesma universidade. Tem interesse pela área de políticas públicas, políticas culturais, análise de dados. Integra o Observatório desde julho de 2022.",
     initials: "MB",
     photo: mariana,
   },

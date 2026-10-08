@@ -20,20 +20,20 @@
   {
     "id": "cGRmc1xQTkFC",
     "nome_arquivo": "Escutas PNAB 2024 (Ciclo 1).pdf",
-    "categoria": "PNAB",
-    "linkDownload": "/pdfs/PNAB/Escutas PNAB 2024 (Ciclo 1).pdf"
-  },
-  {
-    "id": "cGRmc1xQTkFC",
-    "nome_arquivo": "Escutas PNAB 2025 (Ciclo 2).pdf",
-    "categoria": "PNAB",
-    "linkDownload": "/pdfs/PNAB/Escutas PNAB 2025 (Ciclo 2).pdf"
+    "categoria": "PNABI",
+    "linkDownload": "/pdfs/PNABI/Escutas PNAB 2024 (Ciclo 1).pdf"
   },
   {
     "id": "cGRmc1xQTkFC",
     "nome_arquivo": "Relatório Geral PNAB - Ciclo 1.pdf",
-    "categoria": "PNAB",
-    "linkDownload": "/pdfs/PNAB/Relatório Geral PNAB - Ciclo 1.pdf"
+    "categoria": "PNABI",
+    "linkDownload": "/pdfs/PNABI/Relatório Geral PNAB - Ciclo 1.pdf"
+  },
+  {
+    "id": "cGRmc1xQTkFC",
+    "nome_arquivo": "Escutas PNAB 2025 (Ciclo 2).pdf",
+    "categoria": "PNABII",
+    "linkDownload": "/pdfs/PNABII/Escutas PNAB 2025 (Ciclo 2).pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
@@ -97,9 +97,9 @@
   },
   {
     "id": "cGRmc1xQcsOq",
-    "nome_arquivo": "Relatório 2º Prêmio de Design Pernambucano (1).pdf",
+    "nome_arquivo": "Relatório 2º Prêmio de Design Pernambucano.pdf",
     "categoria": "Prêmios da Casa",
-    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 2º Prêmio de Design Pernambucano (1).pdf"
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 2º Prêmio de Design Pernambucano.pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
@@ -115,9 +115,9 @@
   },
   {
     "id": "cGRmc1xQcsOq",
-    "nome_arquivo": "Relatório 2º Prêmio Pernambuco de Artesanato (Edição Luiza dos Tatus) - 2025 (1).pdf",
+    "nome_arquivo": "Relatório 2º Prêmio Pernambuco de Artesanato (Edição Luiza dos Tatus) - 2025.pdf",
     "categoria": "Prêmios da Casa",
-    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 2º Prêmio Pernambuco de Artesanato (Edição Luiza dos Tatus) - 2025 (1).pdf"
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 2º Prêmio Pernambuco de Artesanato (Edição Luiza dos Tatus) - 2025.pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
@@ -127,9 +127,9 @@
   },
   {
     "id": "cGRmc1xQcsOq",
-    "nome_arquivo": "Relatório 6º Prêmio Palhaço Cascudo - 2025 (1).pdf",
+    "nome_arquivo": "Relatório 6º Prêmio Palhaço Cascudo - 2025.pdf",
     "categoria": "Prêmios da Casa",
-    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 6º Prêmio Palhaço Cascudo - 2025 (1).pdf"
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 6º Prêmio Palhaço Cascudo - 2025.pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
@@ -151,9 +151,9 @@
   },
   {
     "id": "cGRmc1xQcsOq",
-    "nome_arquivo": "Relatório Bastidores em Cena 2023.pdf.pdf",
+    "nome_arquivo": "Relatório Bastidores em Cena 2023.pdf",
     "categoria": "Prêmios da Casa",
-    "linkDownload": "/pdfs/Prêmios da Casa/Relatório Bastidores em Cena 2023.pdf.pdf"
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório Bastidores em Cena 2023.pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
@@ -205,9 +205,9 @@
   },
   {
     "id": "cGRmc1xQcsOq",
-    "nome_arquivo": "Relatório Prêmio Roberto de França (Pernalonga) de Teatro  2024 (1).pdf",
+    "nome_arquivo": "Relatório Prêmio Roberto de França (Pernalonga) de Teatro  2024.pdf",
     "categoria": "Prêmios da Casa",
-    "linkDownload": "/pdfs/Prêmios da Casa/Relatório Prêmio Roberto de França (Pernalonga) de Teatro  2024 (1).pdf"
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório Prêmio Roberto de França (Pernalonga) de Teatro  2024.pdf"
   },
   {
     "id": "cGRmc1xQcsOq",
