@@ -10,6 +10,7 @@ import Equipe from "./pages/Equipe";
 import Relatorios from "./pages/Relatorios";
 import Pesquisas from "./pages/Pesquisas";
 import CulturaEmNumeros from "./pages/CulturaEmNumeros";
+import Infograficos from "./pages/Infograficos";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import Contato from "@/pages/Contato";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/pesquisas" element={<Pesquisas />} />
           <Route path="/cultura-em-numeros" element={<CulturaEmNumeros />} />
           <Route path="/relatorios" element={<Relatorios />} />
+          <Route path="/infograficos" element={<Infograficos />} />
           <Route path="/contato" element={<Contato />} />
           <Route path="*" element={<NotFound />} />
         </Routes>        

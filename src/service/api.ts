@@ -21,3 +21,13 @@ export async function fetchRelatorios() {
     return []; 
   }
 }
+export const fetchInfograficos = async () => {
+  try {
+    const response = await fetch('/dados/index-infograficos.json');
+    if (!response.ok) return [];
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao buscar infográficos:", error);
+    return [];
+  }
+};

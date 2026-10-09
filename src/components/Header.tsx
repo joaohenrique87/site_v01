@@ -93,6 +93,15 @@ const Header = () => {
 
               <NavigationMenuItem>
                 <Link
+                  to="/infograficos"
+                  className="inline-flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-black/5"
+                >
+                  Infográficos
+                </Link>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link
                   to="/pesquisas"
                   className="inline-flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-black/5"
                 >
