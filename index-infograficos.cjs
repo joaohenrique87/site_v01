@@ -16,12 +16,16 @@ function getFilesRecursively(directory) {
         if (item.isDirectory()) {
             files = [...files, ...getFilesRecursively(fullPath)];
         } else if (item.name.toLowerCase().endsWith('.pdf')) {
-            const relativePath = fullPath.split(`${path.sep}public${path.sep}`)[1];
+            // Pega apenas o caminho relativo a partir de "public/"
+            const relativePath = path.relative(path.join(__dirname, 'public'), fullPath);
+            // Padroniza as barras para a web (/)
+            const webPath = '/' + relativePath.split(path.sep).join('/');
             
             files.push({
-                id: crypto.createHash('md5').update(relativePath || fullPath).digest('hex'),
+                id: crypto.createHash('md5').update(webPath).digest('hex'),
                 nome_arquivo: item.name,
-                linkDownload: `/${(relativePath || item.name).replace(/\\/g, '/')}`
+                // encodeURI garante que espaços e acentos funcionem no servidor Linux em produção
+                linkDownload: encodeURI(webPath)
             });
         }
     }
@@ -42,7 +46,7 @@ function run() {
         if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
         fs.writeFileSync(outputFile, JSON.stringify(infograficos, null, 2));
-        console.log(`✅ Sucesso! Indexados ${infograficos.length} infográficos em index-infograficos.json.`);
+        console.log(`✅ Sucesso! Indexados ${infograficos.length} infográficos.`);
     } catch (error) {
         console.error("❌ Erro:", error.message);
     }
