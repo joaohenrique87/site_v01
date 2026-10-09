@@ -154,6 +154,10 @@ const Header = () => {
               Relatórios
             </Link>
 
+            <Link to="/infograficos" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
+              Infográficos
+            </Link>
+
             <Link to="/pesquisas" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
               Pesquisas e Estudos
             </Link>
