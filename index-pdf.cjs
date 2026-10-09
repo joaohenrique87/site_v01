@@ -1,8 +1,19 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
+// Caminhos base
 const baseDir = path.join(__dirname, 'public', 'pdfs');
 const outputFile = path.join(__dirname, 'public', 'dados', 'index.json');
+
+// Remove acentos e padroniza para lowercase apenas para detectar duplicatas (não altera o nome final)
+function normalizeFilename(filename) {
+    return filename
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '');
+}
 
 function getFilesRecursively(directory) {
     let files = [];
@@ -13,22 +24,19 @@ function getFilesRecursively(directory) {
         if (item.isDirectory()) {
             files = [...files, ...getFilesRecursively(fullPath)];
         } else if (item.name.toLowerCase().endsWith('.pdf')) {
-            // 1. Pega o nome da pasta pai
             const folderName = path.basename(directory);
-
-            // 2. LÓGICA DE SEPARAÇÃO:
-            // Remove números (anos) para criar a categoria limpa
-            // Ex: "PNAB 2024" vira "PNAB"
             const categoryClean = folderName.replace(/\d+/g, '').trim();
-
+            
+            // Pega o caminho relativo seguro para o link
             const relativePath = fullPath.split(`${path.sep}public${path.sep}`)[1];
             
             files.push({
-                // Gerando ID único baseado no caminho para evitar duplicatas
-                id: Buffer.from(relativePath).toString('base64').substring(0, 12),
-                nome_arquivo: item.name,
-                categoria: categoryClean, // Agora apenas o texto
-                linkDownload: `/${relativePath.replace(/\\/g, '/')}`
+                // ID único real via hash MD5 para evitar colisões no React
+                id: crypto.createHash('md5').update(relativePath || fullPath).digest('hex'),
+                nome_arquivo: item.name, // Mantém o nome 100% original
+                categoria: categoryClean,
+                linkDownload: `/${(relativePath || item.name).replace(/\\/g, '/')}`,
+                _normalized: normalizeFilename(item.name)
             });
         }
     }
@@ -36,19 +44,34 @@ function getFilesRecursively(directory) {
 }
 
 function run() {
-    console.log("🚀 Iniciando varredura filtrada...");
+    console.log("🚀 Iniciando varredura e deduplicação de PDFs...");
     if (!fs.existsSync(baseDir)) {
-        console.error("❌ Pasta não encontrada!");
+        console.error("❌ Pasta não encontrada em:", baseDir);
         return;
     }
 
     try {
         const allPdfs = getFilesRecursively(baseDir);
+
+        // Remove duplicatas usando o nome normalizado como chave
+        const uniquePdfsMap = new Map();
+        for (const pdf of allPdfs) {
+            if (!uniquePdfsMap.has(pdf._normalized)) {
+                uniquePdfsMap.set(pdf._normalized, pdf);
+            }
+        }
+
+        // Limpa o campo temporário antes de salvar
+        const finalPdfs = Array.from(uniquePdfsMap.values()).map(pdf => {
+            delete pdf._normalized;
+            return pdf;
+        });
+
         const outDir = path.dirname(outputFile);
         if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
-        fs.writeFileSync(outputFile, JSON.stringify(allPdfs, null, 2));
-        console.log(`✅ Sucesso! Categoria texto separada dos anos.`);
+        fs.writeFileSync(outputFile, JSON.stringify(finalPdfs, null, 2));
+        console.log(`✅ Sucesso! Indexados ${finalPdfs.length} relatórios únicos.`);
     } catch (error) {
         console.error("❌ Erro:", error.message);
     }

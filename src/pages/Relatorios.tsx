@@ -80,8 +80,7 @@ const PdfCard = ({ arq }: { arq: Arquivo }) => {
     return () => { cancelled = true; };
   }, [arq, isVisible]);
 
-  // Extrai nome e categoria a partir do caminho do arquivo
-  const nome = arq.nome_arquivo?.split("/").pop()?.replace(".pdf", "") ?? "Documento";
+  const nome = arq.nome_arquivo?.split("/").pop() ?? "Documento";
   const partes = arq.nome_arquivo?.split("/");
   const categoriaDisplay = partes && partes.length > 1 ? partes[0].trim() : (arq.categoria || "Geral");
 
@@ -254,25 +253,29 @@ const RelatoriosPDF = () => {
     };
   }, [todos]);
 
+  const normalizeText = (text: string) => {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  };
+
   // Filtragem cruzada
   const filtrados = useMemo(() => {
-    const buscaLower = busca.toLowerCase().trim();
+    const buscaNormalizada = normalizeText(busca);
 
     return todos.filter((arq) => {
-      const nomeArquivoCompleto = arq.nome_arquivo;
-      const nomeLower = nomeArquivoCompleto.toLowerCase();
+      const nomeArquivoCompleto = arq.nome_arquivo || "";
+      const nomeNormalizado = normalizeText(nomeArquivoCompleto);
 
       // Extrai a categoria da pasta do arquivo iterado
       const partes = nomeArquivoCompleto.split("/");
       const categoriaDoArquivo = partes.length > 1 ? partes[0].trim() : (arq.categoria || "");
 
       // Validação da Busca de texto
-      const matchBusca = buscaLower === "" || nomeLower.includes(buscaLower);
+      const matchBusca = buscaNormalizada === "" || nomeNormalizado.includes(buscaNormalizada);
 
       // Validação do Tipo (Categoria)
       const matchCategoria =
         categoriaAtiva === "todos" ||
-        categoriaDoArquivo.toLowerCase() === categoriaAtiva.toLowerCase();
+        normalizeText(categoriaDoArquivo) === normalizeText(categoriaAtiva);
 
       // Validação do Ano
       const regexAno = new RegExp(`\\b${anoAtivo}\\b`);
@@ -436,7 +439,7 @@ const RelatoriosPDF = () => {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filtrados.map((arq) => (
-                  <PdfCard key={arq.nome_arquivo} arq={arq} />
+                  <PdfCard key={arq.id} arq={arq} />
                 ))}
               </div>
             )}
