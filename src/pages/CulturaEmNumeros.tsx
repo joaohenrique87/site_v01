@@ -270,7 +270,7 @@ const CulturaEmNumeros = () => {
                 <CardDescription>Dados e indicadores da Lei Rouanet no Estado de Pernambuco</CardDescription>
               </CardHeader>
               <CardContent>
-                <DashboardFrame src="https://secultpe-obic.shinyapps.io/rouanet-pe/" title="Dashboard Lei Rouanet PE" />
+                <DashboardFrame src="https://obic.shinyapps.io/rouanet-pe-v2/" title="Dashboard Lei Rouanet PE" />
               </CardContent>
             </Card>
             <FileList title="Relatórios em PDF - Rouanet" category="rouanet" />
