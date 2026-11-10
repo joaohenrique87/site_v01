@@ -275,7 +275,7 @@ const RelatoriosPDF = () => {
       // Validação do Tipo (Categoria)
       const matchCategoria =
         categoriaAtiva === "todos" ||
-        normalizeText(categoriaDoArquivo) === normalizeText(categoriaAtiva);
+        categoriaDoArquivo.trim().toLowerCase() === categoriaAtiva.trim().toLowerCase();
 
       // Validação do Ano
       const regexAno = new RegExp(`\\b${anoAtivo}\\b`);
