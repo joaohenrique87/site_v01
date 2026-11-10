@@ -72,16 +72,16 @@
     "linkDownload": "/pdfs/LPG/Relatório - Lei Paulo Gustavo - 2023.pdf"
   },
   {
-    "id": "da6c765d404366da600ced9dae1f5a13",
+    "id": "12a6a13a69ebb3c2b4251dd5e961ff73",
     "nome_arquivo": "Relatório Geral PNAB - Ciclo 1.pdf",
-    "categoria": "PNABI",
-    "linkDownload": "/pdfs/PNABI/Relatório Geral PNAB - Ciclo 1.pdf"
+    "categoria": "PNAB I",
+    "linkDownload": "/pdfs/PNAB I/Relatório Geral PNAB - Ciclo 1.pdf"
   },
   {
-    "id": "70e02c7547980975adad86e330df7349",
+    "id": "8aba8dfa952efa2fa79db5dbb362b488",
     "nome_arquivo": "Escutas PNAB 2025 (Ciclo 2).pdf",
-    "categoria": "PNABII",
-    "linkDownload": "/pdfs/PNABII/Escutas PNAB 2025 (Ciclo 2).pdf"
+    "categoria": "PNAB II",
+    "linkDownload": "/pdfs/PNAB II/Escutas PNAB 2025 (Ciclo 2).pdf"
   },
   {
     "id": "a72cc6f1abb4106931d864f0de950772",
@@ -292,6 +292,12 @@
     "nome_arquivo": "Relatório 15ª EDIÇÃO DO PRÊMIO PERNAMBUCO DE FOTOGRAFIA - 2026.pdf",
     "categoria": "Prêmios da Casa",
     "linkDownload": "/pdfs/Prêmios da Casa/Relatório 15ª EDIÇÃO DO PRÊMIO PERNAMBUCO DE FOTOGRAFIA - 2026.pdf"
+  },
+  {
+    "id": "04b2ef9398f1bab1f2769d96f52403fe",
+    "nome_arquivo": "Relatório 3º Prêmio Euclides da Fonseca de Ópera - 2026.pdf",
+    "categoria": "Prêmios da Casa",
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório 3º Prêmio Euclides da Fonseca de Ópera - 2026.pdf"
   },
   {
     "id": "107f761d2d8519baa82e00ac336fee16",
