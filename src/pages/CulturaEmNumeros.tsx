@@ -299,7 +299,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://secultpe-obic.shinyapps.io/LABOBIC/" title="Dashboard Lei Aldir Blanc de Emergência Cultural" />
               </CardContent>
             </Card>
-            <FileList title="Relatórios em PDF - Lei Paulo Gustavo" category="lpg" />
+            <FileList title="Relatórios em PDF - Lei Aldir Blanc de Emergência Cultural" category="lab" />
           </TabsContent>
 
         </Tabs>
