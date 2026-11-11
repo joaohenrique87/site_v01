@@ -135,7 +135,7 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="absolute top-[98.03px] left-0 w-full lg:hidden border-t border-white/20 bg-[#FFFFFF]/70 backdrop-blur-xl px-4 py-4 rounded-b-[30px] shadow-lg">
+        <div className="absolute top-[98.03px] left-0 w-full lg:hidden border-t border-white/20 bg-white backdrop-blur-xl px-4 py-4 rounded-b-[30px] shadow-lg">
           <nav className="flex flex-col space-y-1">
 
             <Link to="/quem-somos" onClick={() => setIsOpen(false)} className="block px-3 py-3 rounded-md text-gray-900 hover:bg-black/5">
