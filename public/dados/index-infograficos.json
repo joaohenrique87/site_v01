@@ -35,6 +35,11 @@
     "linkDownload": "/infograficos/Infográfico - 1º Prêmio de Artesanato (Edição Bete Costa) - 2023.pdf"
   },
   {
+    "id": "c2df63545b50a3af9fb75affac028d98",
+    "nome_arquivo": "Infográfico - 3° Premio Euclides da Fonseca de Ópera 2026.pdf",
+    "linkDownload": "/infograficos/Infográfico - 3° Premio Euclides da Fonseca de Ópera 2026.pdf"
+  },
+  {
     "id": "72138586d4df089d2e95b433a545a427",
     "nome_arquivo": "Infográfico - 3º Prêmio Palhaço Cascudo de Incentivo às Artes Circense - 2023.pdf",
     "linkDownload": "/infograficos/Infográfico - 3º Prêmio Palhaço Cascudo de Incentivo às Artes Circense - 2023.pdf"
@@ -83,5 +88,10 @@
     "id": "eb5a52a4bb7c908473a41a161f1c52a3",
     "nome_arquivo": "Infográfico Pernalonga 2026.pdf",
     "linkDownload": "/infograficos/Infográfico Pernalonga 2026.pdf"
+  },
+  {
+    "id": "a434490161cb828c73a4f597995baac5",
+    "nome_arquivo": "Infográfico do 3º Prêmio Pernambuco de Artesanato  (Edição Ana das Carrancas) - 2026.pdf",
+    "linkDownload": "/infograficos/Infográfico do 3º Prêmio Pernambuco de Artesanato  (Edição Ana das Carrancas) - 2026.pdf"
   }
 ]

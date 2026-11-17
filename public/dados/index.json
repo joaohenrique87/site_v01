@@ -77,7 +77,7 @@
     "categoria": "PNAB I",
     "linkDownload": "/pdfs/PNAB I/Relatório Geral PNAB - Ciclo 1.pdf"
   },
-   {
+  {
     "id": "a72cc6f1abb4106931d864f0de950772",
     "nome_arquivo": "Relatorio - Pesquisa em Rede RBOT - 2025.pdf",
     "categoria": "Pesquisa",
@@ -112,6 +112,12 @@
     "nome_arquivo": "Relatorio - 9º Prêmio Hermilo Borba Filho de Literatura - 2023.pdf",
     "categoria": "Prêmios da Casa",
     "linkDownload": "/pdfs/Prêmios da Casa/Relatorio - 9º Prêmio Hermilo Borba Filho de Literatura - 2023.pdf"
+  },
+  {
+    "id": "9bd63b85df545723cdfd5b7b5371461f",
+    "nome_arquivo": "Relatório do 3º Prêmio Pernambuco de Artesanato  (Edição Ana das Carrancas) - 2026.pdf",
+    "categoria": "Prêmios da Casa",
+    "linkDownload": "/pdfs/Prêmios da Casa/Relatório do 3º Prêmio Pernambuco de Artesanato  (Edição Ana das Carrancas) - 2026.pdf"
   },
   {
     "id": "753bbff3c9ccd51e6d9ec4c0084b486d",
