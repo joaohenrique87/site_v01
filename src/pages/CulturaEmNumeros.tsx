@@ -234,7 +234,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://obic.shinyapps.io/censo_snc/" title="Dashboard Institucionalização" />
               </CardContent>
             </Card>
-            <FileList title="Relatórios em PDF" category="censo snc" />
+            <FileList title="Relatórios em PDF" category="Censo SNC" />
           </TabsContent>
 
           <TabsContent value="censo" className="space-y-8">
@@ -260,7 +260,7 @@ const CulturaEmNumeros = () => {
                 <DashboardFrame src="https://secultpe-obic.shinyapps.io/pnab/" title="Dashboard PNAB Ciclo 1" />
               </CardContent>
             </Card>
-            <FileList title="Relatórios em PDF - PNAB" category="pnab i" />
+            <FileList title="Relatórios em PDF - PNAB" category="PNAB I" />
           </TabsContent>
 
           <TabsContent value="rouanet" className="space-y-8">
