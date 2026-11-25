@@ -217,7 +217,7 @@ const CulturaEmNumeros = () => {
         <Tabs defaultValue={defaultTab} className="w-full">
           <TabsList className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full mb-8 h-auto gap-3 bg-transparent">
             <TabsTrigger value="censo"     className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Censo Cultural de Pernambuco</TabsTrigger>
-            <TabsTrigger value="censo_snc" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Institucionalização da Cultura</TabsTrigger>
+            <TabsTrigger value="censo_snc" className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Censo Municípios + SNC</TabsTrigger>
             <TabsTrigger value="PNAB"      className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">PNAB</TabsTrigger>
             <TabsTrigger value="rouanet"   className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm">Rouanet em Pernambuco</TabsTrigger>
             <TabsTrigger value="lpg"       className="border py-3 data-[state=active]:bg-primary data-[state=active]:text-white shadow-sm lg:col-start-1">Lei Paulo Gustavo</TabsTrigger>
@@ -227,7 +227,7 @@ const CulturaEmNumeros = () => {
           <TabsContent value="censo_snc" className="space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle>Dashboard - Institucionalização da Cultura em Pernambuco</CardTitle>
+                <CardTitle>Dashboard - Censo Municípios + SNC</CardTitle>
                 <CardDescription>Acesse os dados da Institucionalização da Cultura em Pernambuco</CardDescription>
               </CardHeader>
               <CardContent>
